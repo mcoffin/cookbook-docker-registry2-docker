@@ -1,0 +1,12 @@
+[Unit]
+Description=Docker registry service
+After=docker.service
+Requires=docker.service
+
+[Service]
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker kill docker-registry
+ExecStartPre=-/usr/bin/docker rm docker-registry
+ExecStartPre=/usr/bin/docker pull <%= @image %>
+ExecStart=/usr/bin/docker run --name docker-registry -p 5000:5000 <%= @image %>
+ExecStop=/usr/bin/docker stop docker-registry

@@ -1,0 +1,20 @@
+sudo: false
+addons:
+  apt:
+    sources:
+      - chef-stable-precise
+    packages:
+      - chefdk
+
+install: echo "skip bundle install"
+
+before_script:
+  - eval "$(/opt/chefdk/bin/chef shell-init bash)"
+  - /opt/chefdk/embedded/bin/chef gem install chef-sugar
+script:
+  - /opt/chefdk/embedded/bin/chef --version
+  - /opt/chefdk/embedded/bin/chef exec rubocop --version
+  - /opt/chefdk/embedded/bin/chef exec rubocop
+  - /opt/chefdk/embedded/bin/chef exec foodcritic --version
+  - /opt/chefdk/embedded/bin/chef exec foodcritic . --exclude spec
+  - /opt/chefdk/embedded/bin/chef exec rspec
