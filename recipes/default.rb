@@ -29,7 +29,8 @@ when 'systemd'
     mode '0655'
     variables(
       image: "distribution/registry:#{node['docker-registry2']['version']}",
-      overrides: node['docker-registry2']['overrides']
+      overrides: node['docker-registry2']['overrides'],
+      volumes: node['docker-registry2']['volumes']
     )
     notifies :run, 'execute[systemctl daemon-reload]', :immediately
   end
