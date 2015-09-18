@@ -11,5 +11,5 @@ ExecStartPre=/usr/bin/docker pull <%= @image %>
 <%
     volume_descriptors = @volumes.map { |v| "#{v['host']}:#{v['container']}" }
 %>
-ExecStart=/usr/bin/docker run <% volume_descriptors.each do |v| %>-v <%= v %><% end %><% @overrides.each do |key, value| %>-e <%= "REGISTRY_#{key}=#{value}" %><% end %> --name docker-registry -p 5000:5000 <%= @image %>
+ExecStart=/usr/bin/docker run <% volume_descriptors.each do |v| %>-v <%= v %> <% end %><% @overrides.each do |key, value| %>-e <%= "REGISTRY_#{key}=#{value}" %> <% end %> --name docker-registry -p 5000:5000 <%= @image %>
 ExecStop=/usr/bin/docker stop docker-registry
